@@ -1,0 +1,356 @@
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  min-height: calc(100vh - 120px);
+}
+
+.checkout-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.checkout-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-card,
+.payment-card,
+.booking-summary-card {
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 28px;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #4B5563;
+  margin-bottom: 24px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.form-group input {
+  padding: 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  color: #374151;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2563EB;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  font-family: 'Montserrat', sans-serif;
+  background: white;
+  position: relative;
+}
+
+.payment-option:hover {
+  border-color: #BFDBFE;
+}
+
+.payment-option.selected {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  border-width: 1px;
+}
+
+.payment-option input[type="radio"] {
+  width: 13px;
+  height: 13px;
+  min-width: 13px;
+  min-height: 13px;
+  cursor: pointer;
+  margin: 0;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0.5px solid #0075FF;
+  border-radius: 50%;
+  position: relative;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.payment-option:not(.selected) input[type="radio"] {
+  border-color: #000000;
+}
+
+.payment-option input[type="radio"]:checked {
+  border-color: #0075FF;
+  background: transparent;
+}
+
+.payment-option input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #0075FF;
+}
+
+.payment-option-icon {
+  width: 18px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.payment-option-icon.wallet-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.payment-option-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.payment-option span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  flex: 1;
+}
+
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.booking-summary-card {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.summary-image {
+  width: 100%;
+  height: 128px;
+  background: linear-gradient(90deg, #1F2937 0%, #111827 100%);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-image::before {
+  content: '✈️';
+  font-size: 32px;
+  position: absolute;
+}
+
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.summary-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: #111827;
+  font-weight: 400;
+  min-width: 80px;
+}
+
+.summary-value {
+  font-size: 16px;
+  color: #111827;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.summary-divider {
+  border-top: 1px solid #E5E7EB;
+  margin: 24px 0;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.total-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.total-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2563EB;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.complete-payment-btn {
+  width: 100%;
+  padding: 12px;
+  background: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.complete-payment-btn:hover:not(:disabled) {
+  background: #1D4ED8;
+}
+
+.complete-payment-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Razorpay Info Section */
+.razorpay-info {
+  margin-top: 24px;
+}
+
+.razorpay-info .info-box {
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.razorpay-info .info-box p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #0C4A6E;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 20px;
+}
+
+.razorpay-info .info-box p:last-child {
+  margin-bottom: 0;
+}
+
+.razorpay-info .info-note {
+  font-size: 12px;
+  color: #075985;
+  font-weight: 500;
+}
+
+.razorpay-icon {
+  background: #326CF9;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 968px) {
+  .checkout-content {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-summary-card {
+    position: relative;
+    top: 0;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,779 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@400;500;600&display=swap');
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  padding: 2rem;
+  background: white;
+}
+
+.auth-card {
+  width: 486px;
+  background: white;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.20);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+}
+
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.auth-icon {
+  width: 64px;
+  height: 64px;
+  background: #2563EB;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.auth-icon-inner {
+  width: 27px;
+  height: 24px;
+  background: white;
+  border-radius: 2px;
+}
+
+.auth-title {
+  text-align: center;
+  color: #111827;
+  font-size: 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  line-height: 32px;
+  margin: 0;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #4B5563;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  color: #374151;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.form-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  color: #374151;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  border-color: #2563EB;
+}
+
+.form-input::placeholder {
+  color: #ADAEBC;
+}
+
+.password-hint {
+  color: #6B7280;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 16px;
+  margin-top: 4px;
+}
+
+.btn-primary {
+  width: 100%;
+  height: 48px;
+  background: #2563EB;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 8px;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-primary:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.forgot-password {
+  text-align: right;
+  margin-top: 8px;
+}
+
+.forgot-password-link {
+  color: #2563EB;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 28px;
+  color: #4B5563;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.auth-link a {
+  color: #2563EB;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+.auth-link-register {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Login-specific styles */
+.login-card {
+  width: 486px;
+  height: 766px;
+  position: relative;
+  background: white;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.20);
+  border-radius: 16px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login-header {
+  width: 384px;
+  height: 192px;
+  position: absolute;
+  left: 51px;
+  top: 32px;
+}
+
+.login-icon-container {
+  width: 384px;
+  height: 64px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-icon {
+  width: 64px;
+  height: 64px;
+  background: #2563EB;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.login-icon svg {
+  width: 27px;
+  height: 24px;
+}
+
+.login-title {
+  width: 384px;
+  text-align: center;
+  color: #111827;
+  font-size: 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  line-height: 32px;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: 76px;
+}
+
+.login-subtitle {
+  width: 308px;
+  height: 40px;
+  text-align: center;
+  color: #4B5563;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  position: absolute;
+  left: 38px;
+  top: 148px;
+}
+
+.login-form {
+  width: 384px;
+  height: 296px;
+  position: absolute;
+  left: 32px;
+  top: 256px;
+}
+
+.login-form-group {
+  width: 384px;
+  height: 78px;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.login-label {
+  width: 384px;
+  height: 20px;
+  color: #374151;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.login-input-wrapper {
+  width: 419px;
+  height: 50px;
+  position: relative;
+  margin-top: 8px;
+}
+
+.login-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 45px 0 16px;
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  outline: none;
+  color: #374151;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.login-input:focus {
+  border-color: #2563EB;
+  outline: 1px solid #2563EB;
+  outline-offset: -1px;
+}
+
+.login-input::placeholder {
+  color: #ADAEBC;
+}
+
+.login-input-icon {
+  position: absolute;
+  right: 19px;
+  top: 16px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.login-password-toggle {
+  position: absolute;
+  right: 21px;
+  top: 13px;
+  width: 18px;
+  height: 23px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.login-password-toggle:hover {
+  opacity: 0.7;
+}
+
+.login-password-toggle svg {
+  width: 18px;
+  height: 16px;
+}
+
+.login-button {
+  width: 419px;
+  height: 48px;
+  background: #2563EB;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: absolute;
+  left: 0;
+  top: 248px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.login-button:hover {
+  background: #1d4ed8;
+}
+
+.login-button:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.login-forgot-password {
+  width: 132px;
+  height: 20px;
+  position: absolute;
+  left: 319px;
+  top: 452px;
+}
+
+.login-forgot-link {
+  color: #2563EB;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.login-forgot-link:hover {
+  text-decoration: underline;
+}
+
+.login-signup {
+  width: 384px;
+  height: 20px;
+  position: absolute;
+  left: 32px;
+  top: 584px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-signup-text {
+  color: #4B5563;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  display: inline;
+}
+
+.login-signup-link {
+  color: #2563EB;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.login-signup-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .auth-card {
+    width: 100%;
+    max-width: 486px;
+    padding: 1.5rem;
+  }
+
+  .auth-title {
+    font-size: 20px;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 486px;
+    height: auto;
+    min-height: 766px;
+    padding: 16px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .login-header,
+  .login-form,
+  .login-form-group,
+  .login-label {
+    width: 100%;
+    max-width: 384px;
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+
+  .login-input-wrapper {
+    width: 100%;
+    max-width: 419px;
+  }
+
+  .login-button {
+    width: 100%;
+    max-width: 419px;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 24px;
+  }
+
+  .login-signup {
+    width: 100%;
+    max-width: 384px;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 24px;
+  }
+
+  .login-forgot-password {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 16px;
+    text-align: right;
+    width: auto;
+  }
+}
+
+/* Register-specific styles */
+.register-card {
+  width: 486px;
+  height: auto;
+  min-height: 867px;
+  position: relative;
+  background: white;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.20);
+  border-radius: 16px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.register-header {
+  width: 384px;
+  height: 192px;
+  position: absolute;
+  left: 51px;
+  top: 32px;
+}
+
+.register-icon-container {
+  width: 384px;
+  height: 64px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-icon {
+  width: 64px;
+  height: 64px;
+  background: #2563EB;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.register-icon svg {
+  width: 27px;
+  height: 24px;
+}
+
+.register-title {
+  width: 384px;
+  text-align: center;
+  color: #111827;
+  font-size: 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  line-height: 32px;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: 68px;
+}
+
+.register-subtitle {
+  width: 308px;
+  height: 40px;
+  text-align: center;
+  color: #4B5563;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  position: absolute;
+  left: 38px;
+  top: 112px;
+}
+
+.register-form {
+  width: 384px;
+  position: absolute;
+  left: 32px;
+  top: 200px;
+}
+
+.register-form-group {
+  width: 384px;
+  height: 78px;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.register-form-group-password {
+  height: 102px;
+}
+
+.register-label {
+  width: 384px;
+  height: 20px;
+  color: #374151;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.register-input-wrapper {
+  width: 419px;
+  height: 50px;
+  position: relative;
+  margin-top: 8px;
+}
+
+.register-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  outline: none;
+  color: #374151;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.register-input:focus {
+  border-color: #2563EB;
+  outline: 1px solid #2563EB;
+  outline-offset: -1px;
+}
+
+.register-input::placeholder {
+  color: #ADAEBC;
+}
+
+.register-password-hint {
+  width: 278px;
+  height: 17px;
+  position: absolute;
+  left: 0;
+  top: 86px;
+  color: #6B7280;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 0;
+}
+
+.register-button {
+  width: 419px;
+  height: 48px;
+  background: #2563EB;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.register-button:hover {
+  background: #1d4ed8;
+}
+
+.register-button:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.register-login-link {
+  width: 384px;
+  height: 20px;
+  position: absolute;
+  left: 32px;
+  top: 750px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-login-text {
+  color: #4B5563;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.register-login-link-text {
+  color: #2563EB;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.register-login-link-text:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .register-card {
+    width: 100%;
+    max-width: 486px;
+    height: auto;
+    min-height: 867px;
+    padding: 16px;
+  }
+
+  .register-title {
+    font-size: 20px;
+  }
+
+  .register-header,
+  .register-form,
+  .register-form-group,
+  .register-label {
+    width: 100%;
+    max-width: 384px;
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+
+  .register-input-wrapper {
+    width: 100%;
+    max-width: 419px;
+  }
+
+  .register-button {
+    width: 100%;
+    max-width: 419px;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 24px;
+  }
+
+  .register-login-link {
+    width: 100%;
+    max-width: 384px;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 24px;
+  }
+}
+

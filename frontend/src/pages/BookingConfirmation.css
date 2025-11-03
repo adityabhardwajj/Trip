@@ -1,0 +1,390 @@
+.confirmation-container {
+  max-width: 672px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  min-height: calc(100vh - 120px);
+}
+
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  background: #DCFCE7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.confirmation-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.confirmation-subtitle {
+  font-size: 16px;
+  color: #4B5563;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ticket-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #F3F4F6;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+  width: 100%;
+}
+
+.ticket-header {
+  background: linear-gradient(90deg, #2563EB 0%, #1D4ED8 100%);
+  padding: 24px 32px;
+  color: white;
+}
+
+.ticket-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ticket-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ticket-print-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.booking-id {
+  font-size: 14px;
+  color: #DBEAFE;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ticket-body {
+  padding: 32px;
+}
+
+.route-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.route-start,
+.route-end {
+  flex: 0 0 auto;
+}
+
+.route-code {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 8px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.route-name {
+  font-size: 14px;
+  color: #6B7280;
+  text-align: center;
+  margin-bottom: 4px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.route-time {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.route-connector {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+  position: relative;
+}
+
+.connector-line {
+  width: 100%;
+  border-top: 2px solid #D1D5DB;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.connector-icon {
+  background: white;
+  padding: 0 8px;
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+}
+
+.connector-duration {
+  font-size: 12px;
+  color: #6B7280;
+  margin-top: 8px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ticket-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.info-box {
+  background: #F9FAFB;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #6B7280;
+  margin-bottom: 4px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.info-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ticket-divider {
+  border-top: 1px solid #E5E7EB;
+  margin: 24px 0;
+}
+
+.ticket-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.total-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.total-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #16A34A;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.qr-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.qr-container {
+  width: 160px;
+  height: 160px;
+  background: #F9FAFB;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  padding: 16px;
+}
+
+.qr-code {
+  width: 128px;
+  height: 128px;
+}
+
+.qr-instruction {
+  font-size: 14px;
+  color: #4B5563;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ticket-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-download {
+  padding: 16px;
+  background: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+  background: #1D4ED8;
+}
+
+.btn-view {
+  padding: 16px;
+  background: white;
+  color: #2563EB;
+  border: 2px solid #2563EB;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.btn-view:hover {
+  background: #EFF6FF;
+}
+
+.download-toast {
+  position: fixed;
+  top: 140px;
+  right: 80px;
+  background: white;
+  padding: 16px 24px;
+  border-radius: 16px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.08);
+  border-left: 8px solid #076F24;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 1000;
+  max-width: 350px;
+}
+
+.toast-icon {
+  width: 16px;
+  height: 16px;
+  background: #076F24;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.toast-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #003610;
+  font-family: 'Mulish', sans-serif;
+}
+
+.toast-message {
+  font-size: 14px;
+  color: #6D6D6D;
+  font-family: 'Mulish', sans-serif;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #B0B0B0;
+  cursor: pointer;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close:hover {
+  color: #6D6D6D;
+}
+
+@media (max-width: 768px) {
+  .confirmation-container {
+    padding: 1rem;
+  }
+
+  .ticket-body {
+    padding: 24px;
+  }
+
+  .route-section {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .route-connector {
+    transform: rotate(90deg);
+    margin: 16px 0;
+  }
+
+  .ticket-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .download-toast {
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+}
+
