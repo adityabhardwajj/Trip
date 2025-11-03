@@ -114,7 +114,6 @@ const AdminPanel = () => {
         toast.success('Trip added successfully');
       }
 
-      // Reset form
       setTripForm({
         source: '',
         destination: '',
@@ -126,7 +125,6 @@ const AdminPanel = () => {
       setEditingTrip(null);
       setShowAddModal(false);
 
-      // Refresh trips list
       await fetchTrips();
     } catch (error) {
       toast.error(getErrorMessage(error));
@@ -201,7 +199,6 @@ const AdminPanel = () => {
   };
 
   const getArrivalTime = (departureTime) => {
-    // Simple calculation - add 2 hours to departure time
     if (!departureTime) return 'N/A';
     const [hours, mins] = departureTime.split(':');
     let hour24 = parseInt(hours);
@@ -219,7 +216,6 @@ const AdminPanel = () => {
     <div className="admin-panel-container">
       <h2 className="admin-title">Admin Dashboard</h2>
       
-      {/* Admin Overview */}
       <div className="admin-overview">
         <h3 className="overview-title">Admin Overview</h3>
         <div className="stats-grid">
@@ -259,7 +255,6 @@ const AdminPanel = () => {
         </div>
       </div>
 
-      {/* Trip Management */}
       <div className="management-section">
         <div className="section-header">
           <h3 className="section-title">Trip Management</h3>
@@ -351,7 +346,6 @@ const AdminPanel = () => {
         </div>
       </div>
 
-      {/* Booking Management */}
       <div className="management-section">
         <div className="section-header">
           <h3 className="section-title">Booking Management</h3>
@@ -453,7 +447,6 @@ const AdminPanel = () => {
         </div>
       </div>
 
-      {/* Add Trip Modal */}
       {showAddModal && (
         <div className="modal-overlay" onClick={cancelEdit}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -577,7 +570,6 @@ const AdminPanel = () => {
   );
 };
 
-// Seat Grid Component
 const SeatGrid = ({ totalSeats }) => {
   const rows = ['A', 'B', 'C', 'D', 'E', 'F'];
   const colsPerRow = 6;

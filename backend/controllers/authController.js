@@ -1,14 +1,12 @@
 import User from '../models/User.js';
 import { generateToken } from '../utils/generateToken.js';
 
-// @desc    Register user
-// @route   POST /api/auth/register
-// @access  Public
+
 export const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Check if user exists
+   
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({
@@ -17,7 +15,7 @@ export const register = async (req, res) => {
       });
     }
 
-    // Create user
+   
     const user = await User.create({
       name,
       email,
@@ -50,14 +48,11 @@ export const register = async (req, res) => {
   }
 };
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate email & password
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -65,7 +60,7 @@ export const login = async (req, res) => {
       });
     }
 
-    // Check for user
+  
     const user = await User.findOne({ email }).select('+password');
 
     if (!user || !(await user.comparePassword(password))) {
@@ -93,9 +88,7 @@ export const login = async (req, res) => {
   }
 };
 
-// @desc    Get current logged in user
-// @route   GET /api/auth/me
-// @access  Private
+
 export const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

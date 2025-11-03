@@ -21,7 +21,6 @@ const MyBookings = () => {
       const response = await getUserBookings();
       setBookings(response.data.data);
       
-      // Scroll to booking if coming from checkout
       if (location.state?.bookingId) {
         setTimeout(() => {
           const element = document.getElementById(location.state.bookingId);
@@ -108,7 +107,6 @@ const MyBookings = () => {
   return (
     <div className="bookings-container">
       <div className="bookings-content">
-        {/* Upcoming Bookings */}
         <div className="bookings-section">
           <h3 className="section-title">Upcoming Bookings</h3>
           {bookings.upcoming && bookings.upcoming.length > 0 ? (
@@ -175,7 +173,6 @@ const MyBookings = () => {
           )}
         </div>
 
-        {/* Past Bookings */}
         <div className="bookings-section">
           <h3 className="section-title">Past Bookings</h3>
           {bookings.past && bookings.past.length > 0 ? (

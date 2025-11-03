@@ -73,7 +73,6 @@ const DatePicker = ({ value, onChange, placeholder = 'mm/dd/yyyy' }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Previous month's trailing days
     const prevMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 0);
     const daysInPrevMonth = prevMonth.getDate();
     for (let i = firstDay - 1; i >= 0; i--) {
@@ -81,14 +80,12 @@ const DatePicker = ({ value, onChange, placeholder = 'mm/dd/yyyy' }) => {
       days.push({ date, isCurrentMonth: false, isPast: date < today });
     }
 
-    // Current month's days
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
       days.push({ date, isCurrentMonth: true, isPast: date < today });
     }
 
-    // Next month's leading days to fill the grid
-    const remainingCells = 42 - days.length; // 6 rows * 7 days
+    const remainingCells = 42 - days.length;
     for (let i = 1; i <= remainingCells; i++) {
       const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, i);
       days.push({ date, isCurrentMonth: false, isPast: date < today });
@@ -122,7 +119,6 @@ const DatePicker = ({ value, onChange, placeholder = 'mm/dd/yyyy' }) => {
   };
 
   const handleCancel = () => {
-    // Reset to original value
     if (value) {
       const date = new Date(value);
       setSelectedDate(date);
@@ -157,8 +153,6 @@ const DatePicker = ({ value, onChange, placeholder = 'mm/dd/yyyy' }) => {
   };
 
   const handleYearClick = () => {
-    // For now, just toggle the year dropdown or increment/decrement
-    // In a full implementation, this could open a year selector
     const newYear = currentYear + 1;
     setCurrentYear(newYear);
     setCurrentMonth(new Date(newYear, currentMonthIndex, 1));

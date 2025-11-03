@@ -8,11 +8,9 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/hrms';
 
 async function initializeSeats() {
   try {
-    // Connect to MongoDB
     await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    // Find all trips
     const trips = await Trip.find({});
 
     console.log(`Found ${trips.length} trips to process`);
@@ -22,7 +20,6 @@ async function initializeSeats() {
     for (const trip of trips) {
       let needsUpdate = false;
       
-      // Check if seats array needs initialization
       if (!trip.seats || trip.seats.length === 0) {
         console.log(`Trip ${trip._id}: Seats array is empty, initializing...`);
         trip.seats = [];
@@ -36,7 +33,6 @@ async function initializeSeats() {
         trip.availableSeats = trip.totalSeats;
         needsUpdate = true;
       } else if (trip.seats.length < trip.totalSeats) {
-        // Check if any seats are missing
         const existingSeatNumbers = new Set(trip.seats.map(s => s.number));
         let missingSeats = 0;
         
@@ -60,7 +56,6 @@ async function initializeSeats() {
         }
       }
 
-      // Recalculate available seats to ensure accuracy
       if (trip.seats && trip.seats.length > 0) {
         const bookedCount = trip.seats.filter(s => s.isBooked).length;
         const calculatedAvailable = trip.totalSeats - bookedCount;
@@ -82,7 +77,6 @@ async function initializeSeats() {
 
     console.log(`\n✓ Completed! Updated ${updatedCount} out of ${trips.length} trips`);
     
-    // Close connection
     await mongoose.connection.close();
     console.log('Database connection closed');
     process.exit(0);
@@ -93,6 +87,5 @@ async function initializeSeats() {
   }
 }
 
-// Run the script
 initializeSeats();
 

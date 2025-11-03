@@ -44,22 +44,18 @@ const TripDetails = () => {
       console.log('Removing seat:', seatNumber);
       setSelectedSeats(selectedSeats.filter(s => s !== seatNumber));
     } else {
-      // Check if seats array exists and find the seat
       if (!trip.seats || trip.seats.length === 0) {
-        // If seats array is missing, assume seat is available
         setSelectedSeats([...selectedSeats, seatNumber]);
         return;
       }
       
       const seat = trip.seats.find(s => s.number === seatNumber);
       
-      // If seat not found in array, assume it's available (new seat)
       if (!seat) {
         setSelectedSeats([...selectedSeats, seatNumber]);
         return;
       }
       
-      // Check if seat is booked
       if (seat.isBooked) {
         toast.error(`Seat ${formatSeatNumber(seatNumber)} is already booked`);
         return;
@@ -109,17 +105,11 @@ const TripDetails = () => {
     return <div className="trip-details-container">Trip not found</div>;
   }
 
-  // Use the utility function for seat formatting
   const getSeatLabel = formatSeatNumber;
 
-  // Arrange seats in bus-style layout with aisle
-  // Left side: A1-A2 | Aisle | Right side: A6
-  // This creates a 2+1 layout: 2 seats on left, aisle, 1 seat on right
-  // Column 0: Left pair (A1-A2, B1-B2, C1-C2, D1-D2, E1-E2, F1-F2)
-  // Column 1: Right single (A6, B6, C6, D6, E6, F6)
   const rows = ['A', 'B', 'C', 'D', 'E', 'F'];
-  const seatsPerRow = 6; // 6 seats per row (A1-A6)
-  const totalColumns = 2; // Left pair column + Right single column
+  const seatsPerRow = 6;
+  const totalColumns = 2;
 
   return (
     <div className="trip-details-container">
@@ -190,14 +180,12 @@ const TripDetails = () => {
           
           <div className="seats-container">
             <div className="seats-container-inner">
-              {/* Left side: 2 seats per row (A1-A2, B1-B2, etc.) */}
               <div key="left-column" className="seat-column">
                 {rows.map((rowLetter, rowIndex) => {
-                  const baseSeat = rowIndex * seatsPerRow + 1; // A1=1, B1=7, C1=13, etc.
-                  const seat1Number = baseSeat; // A1, B1, C1...
-                  const seat2Number = baseSeat + 1; // A2, B2, C2...
+                  const baseSeat = rowIndex * seatsPerRow + 1;
+                  const seat1Number = baseSeat;
+                  const seat2Number = baseSeat + 1;
                   
-                  // Check if seats exist
                   if (seat1Number > trip.totalSeats && seat2Number > trip.totalSeats) return null;
                   
                   return (
@@ -205,7 +193,6 @@ const TripDetails = () => {
                       {[seat1Number, seat2Number].map((seatNumber, pairIndex) => {
                         if (seatNumber > trip.totalSeats) return null;
                         
-                        // Safely check if seat is booked
                         let isBooked = false;
                         if (trip.seats && trip.seats.length > 0) {
                           const seat = trip.seats.find(s => s.number === seatNumber);
@@ -241,21 +228,17 @@ const TripDetails = () => {
                 })}
               </div>
 
-              {/* Aisle separator */}
               <div key="aisle" className="aisle-separator">
                 <div className="aisle-line"></div>
               </div>
 
-              {/* Right side: 1 seat per row (A6, B6, C6, etc.) */}
               <div key="right-column" className="seat-column">
                 {rows.map((rowLetter, rowIndex) => {
-                  const baseSeat = rowIndex * seatsPerRow + 1; // A1=1, B1=7, C1=13, etc.
-                  const seat6Number = baseSeat + 5; // A6, B6, C6...
+                  const baseSeat = rowIndex * seatsPerRow + 1;
+                  const seat6Number = baseSeat + 5;
                   
-                  // Check if seat exists
                   if (seat6Number > trip.totalSeats) return null;
                   
-                  // Safely check if seat is booked
                   let isBooked = false;
                   if (trip.seats && trip.seats.length > 0) {
                     const seat = trip.seats.find(s => s.number === seat6Number);

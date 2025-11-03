@@ -37,7 +37,6 @@ const bookingSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Populate trip details when querying
 bookingSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'trip',

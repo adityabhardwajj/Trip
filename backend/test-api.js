@@ -7,7 +7,6 @@ const API_URL = `http://localhost:${process.env.PORT || 5001}/api`;
 let adminToken = '';
 let userToken = '';
 
-// Colors for console output
 const colors = {
   reset: '\x1b[0m',
   green: '\x1b[32m',
@@ -42,13 +41,11 @@ async function runTests() {
 
   const results = [];
 
-  // Test 1: Health Check
   results.push(await testAPI('Health Check', async () => {
     const response = await axios.get(`${API_URL}/health`);
     if (response.data.status !== 'OK') throw new Error('Health check failed');
   }));
 
-  // Test 2: Register User
   results.push(await testAPI('Register User', async () => {
     const response = await axios.post(`${API_URL}/auth/register`, {
       name: 'Test User',
@@ -61,7 +58,6 @@ async function runTests() {
     userToken = response.data.data.token;
   }));
 
-  // Test 3: Login Admin
   results.push(await testAPI('Login Admin', async () => {
     const response = await axios.post(`${API_URL}/auth/login`, {
       email: 'admin@example.com',
@@ -73,7 +69,6 @@ async function runTests() {
     adminToken = response.data.data.token;
   }));
 
-  // Test 4: Login User
   results.push(await testAPI('Login User', async () => {
     const response = await axios.post(`${API_URL}/auth/login`, {
       email: 'user@example.com',
@@ -85,7 +80,6 @@ async function runTests() {
     userToken = response.data.data.token;
   }));
 
-  // Test 5: Get Current User (Protected Route)
   results.push(await testAPI('Get Current User (Protected)', async () => {
     const response = await axios.get(`${API_URL}/auth/me`, {
       headers: { Authorization: `Bearer ${userToken}` },
@@ -95,7 +89,6 @@ async function runTests() {
     }
   }));
 
-  // Test 6: Get All Trips
   results.push(await testAPI('Get All Trips', async () => {
     const response = await axios.get(`${API_URL}/trips`);
     if (!response.data.success || !Array.isArray(response.data.data)) {
@@ -104,7 +97,6 @@ async function runTests() {
     log.info(`Found ${response.data.data.length} trips`);
   }));
 
-  // Test 7: Get Single Trip
   let tripId = '';
   results.push(await testAPI('Get Single Trip', async () => {
     const tripsResponse = await axios.get(`${API_URL}/trips`);
@@ -119,7 +111,6 @@ async function runTests() {
     }
   }));
 
-  // Test 8: Create Trip (Admin Only)
   let createdTripId = '';
   results.push(await testAPI('Create Trip (Admin)', async () => {
     const response = await axios.post(
@@ -143,7 +134,6 @@ async function runTests() {
     log.info(`Created trip with ID: ${createdTripId}`);
   }));
 
-  // Test 9: Update Trip (Admin Only)
   results.push(await testAPI('Update Trip (Admin)', async () => {
     if (!createdTripId) throw new Error('No trip to update');
     const response = await axios.put(
@@ -160,7 +150,6 @@ async function runTests() {
     }
   }));
 
-  // Test 10: Create Booking (User)
   let bookingId = '';
   results.push(await testAPI('Create Booking (User)', async () => {
     if (!tripId) {
@@ -189,7 +178,6 @@ async function runTests() {
     log.info(`Created booking with ID: ${bookingId}`);
   }));
 
-  // Test 11: Get User Bookings
   results.push(await testAPI('Get User Bookings', async () => {
     const response = await axios.get(`${API_URL}/bookings/user`, {
       headers: { Authorization: `Bearer ${userToken}` },
@@ -200,7 +188,6 @@ async function runTests() {
     log.info(`Found ${response.data.data.upcoming.length} upcoming bookings`);
   }));
 
-  // Test 12: Get User Profile
   results.push(await testAPI('Get User Profile', async () => {
     const response = await axios.get(`${API_URL}/users/profile`, {
       headers: { Authorization: `Bearer ${userToken}` },
@@ -210,7 +197,6 @@ async function runTests() {
     }
   }));
 
-  // Test 13: Cancel Booking
   results.push(await testAPI('Cancel Booking', async () => {
     if (!bookingId) throw new Error('No booking to cancel');
     const response = await axios.put(
@@ -225,7 +211,6 @@ async function runTests() {
     }
   }));
 
-  // Test 14: Delete Trip (Admin)
   results.push(await testAPI('Delete Trip (Admin)', async () => {
     if (!createdTripId) throw new Error('No trip to delete');
     const response = await axios.delete(`${API_URL}/trips/${createdTripId}`, {
@@ -236,7 +221,6 @@ async function runTests() {
     }
   }));
 
-  // Test 15: Get All Bookings (Admin)
   results.push(await testAPI('Get All Bookings (Admin)', async () => {
     const response = await axios.get(`${API_URL}/bookings/all`, {
       headers: { Authorization: `Bearer ${adminToken}` },
@@ -247,7 +231,6 @@ async function runTests() {
     log.info(`Found ${response.data.data.length} total bookings`);
   }));
 
-  // Summary
   const passed = results.filter((r) => r).length;
   const total = results.length;
   console.log('\n' + '='.repeat(50));
@@ -267,7 +250,6 @@ async function runTests() {
   process.exit(passed === total ? 0 : 1);
 }
 
-// Run tests
 runTests().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);

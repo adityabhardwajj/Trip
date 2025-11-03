@@ -1,15 +1,12 @@
 import Trip from '../models/Trip.js';
 
-// @desc    Get all trips
-// @route   GET /api/trips
-// @access  Public
 export const getTrips = async (req, res) => {
   try {
     const { source, destination, date } = req.query;
     
     let query = {};
     
-    if (source) {
+    if (source) { 
       query.source = new RegExp(source, 'i');
     }
     
@@ -27,7 +24,6 @@ export const getTrips = async (req, res) => {
 
     let trips = await Trip.find(query).sort({ date: 1, time: 1 });
 
-    // Ensure all trips have seats initialized
     for (const trip of trips) {
       if (!trip.seats || trip.seats.length === 0) {
         trip.seats = [];
@@ -56,7 +52,6 @@ export const getTrips = async (req, res) => {
         trip.availableSeats = trip.totalSeats - bookedCount;
         await trip.save();
       } else {
-        // Recalculate available seats
         const bookedCount = trip.seats.filter(s => s.isBooked).length;
         trip.availableSeats = trip.totalSeats - bookedCount;
         if (trip.isModified()) {
@@ -65,7 +60,6 @@ export const getTrips = async (req, res) => {
       }
     }
 
-    // Prevent caching of trip data - add ETag removal
     res.removeHeader('ETag');
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
     res.set('Pragma', 'no-cache');
@@ -85,9 +79,6 @@ export const getTrips = async (req, res) => {
   }
 };
 
-// @desc    Get single trip
-// @route   GET /api/trips/:id
-// @access  Public
 export const getTrip = async (req, res) => {
   try {
     let trip = await Trip.findById(req.params.id);
@@ -99,7 +90,6 @@ export const getTrip = async (req, res) => {
       });
     }
 
-    // Ensure seats array is initialized - CRITICAL: Always do this
     let needsSave = false;
     if (!trip.seats || trip.seats.length === 0) {
       trip.seats = [];
@@ -113,7 +103,6 @@ export const getTrip = async (req, res) => {
       trip.availableSeats = trip.totalSeats;
       needsSave = true;
     } else if (trip.seats.length < trip.totalSeats) {
-      // Ensure all seats from 1 to totalSeats exist
       const existingSeatNumbers = new Set(trip.seats.map(s => s.number));
       for (let i = 1; i <= trip.totalSeats; i++) {
         if (!existingSeatNumbers.has(i)) {
@@ -125,13 +114,10 @@ export const getTrip = async (req, res) => {
           needsSave = true;
         }
       }
-      // Sort seats by number
       trip.seats.sort((a, b) => a.number - b.number);
-      // Recalculate available seats
       const bookedCount = trip.seats.filter(s => s.isBooked).length;
       trip.availableSeats = trip.totalSeats - bookedCount;
     } else {
-      // Recalculate available seats to ensure accuracy
       const bookedCount = trip.seats.filter(s => s.isBooked).length;
       const calculatedAvailable = trip.totalSeats - bookedCount;
       if (trip.availableSeats !== calculatedAvailable) {
@@ -140,14 +126,11 @@ export const getTrip = async (req, res) => {
       }
     }
 
-    // Save if needed to persist seat initialization
     if (needsSave) {
       await trip.save();
-      // Re-fetch to get the saved version
       trip = await Trip.findById(req.params.id);
     }
 
-    // Ensure seats are in response even if save didn't work (defensive)
     if (!trip.seats || trip.seats.length === 0) {
       trip.seats = [];
       for (let i = 1; i <= trip.totalSeats; i++) {
@@ -160,7 +143,6 @@ export const getTrip = async (req, res) => {
       trip.availableSeats = trip.totalSeats;
     }
 
-    // Prevent caching to ensure fresh data - add ETag removal
     res.removeHeader('ETag');
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
     res.set('Pragma', 'no-cache');
@@ -179,9 +161,6 @@ export const getTrip = async (req, res) => {
   }
 };
 
-// @desc    Create new trip
-// @route   POST /api/trips
-// @access  Private/Admin
 export const createTrip = async (req, res) => {
   try {
     const { source, destination, date, time, price, totalSeats } = req.body;
@@ -207,9 +186,6 @@ export const createTrip = async (req, res) => {
   }
 };
 
-// @desc    Update trip
-// @route   PUT /api/trips/:id
-// @access  Private/Admin
 export const updateTrip = async (req, res) => {
   try {
     let trip = await Trip.findById(req.params.id);
@@ -238,9 +214,6 @@ export const updateTrip = async (req, res) => {
   }
 };
 
-// @desc    Delete trip
-// @route   DELETE /api/trips/:id
-// @access  Private/Admin
 export const deleteTrip = async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.id);
@@ -265,4 +238,3 @@ export const deleteTrip = async (req, res) => {
     });
   }
 };
-

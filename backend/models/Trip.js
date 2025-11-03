@@ -56,14 +56,11 @@ const tripSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Initialize seats array when creating or updating a trip
 tripSchema.pre('save', function(next) {
-  // Only process if totalSeats is defined
   if (!this.totalSeats || this.totalSeats < 1) {
     return next();
   }
 
-  // Initialize seats if missing or empty
   if (!this.seats || this.seats.length === 0) {
     this.seats = [];
     for (let i = 1; i <= this.totalSeats; i++) {
@@ -74,7 +71,6 @@ tripSchema.pre('save', function(next) {
       });
     }
   } else {
-    // Ensure all seats from 1 to totalSeats exist
     const existingSeatNumbers = new Set(this.seats.map(s => s.number));
     for (let i = 1; i <= this.totalSeats; i++) {
       if (!existingSeatNumbers.has(i)) {
@@ -85,18 +81,14 @@ tripSchema.pre('save', function(next) {
         });
       }
     }
-    // Sort seats by number
     this.seats.sort((a, b) => a.number - b.number);
   }
   
-  // Recalculate available seats based on booked seats
   const bookedCount = this.seats.filter(s => s.isBooked).length;
   this.availableSeats = this.totalSeats - bookedCount;
   
   next();
 });
-
-// Note: Seat initialization is now handled in controllers to avoid async issues in post hooks
 
 export default mongoose.model('Trip', tripSchema);
 

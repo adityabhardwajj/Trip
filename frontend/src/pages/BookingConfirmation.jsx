@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { formatSeatNumbers } from '../utils/seatFormatter';
 import './BookingConfirmation.css';
@@ -33,7 +33,6 @@ const BookingConfirmation = () => {
   };
 
   const handleDownloadTicket = () => {
-    // Generate ticket HTML
     const ticketContent = `
       <html>
         <head>
@@ -168,13 +167,11 @@ const BookingConfirmation = () => {
       </html>
     `;
 
-    // Open print window
     const printWindow = window.open('', '_blank');
     printWindow.document.write(ticketContent);
     printWindow.document.close();
     printWindow.focus();
     
-    // Show download toast
     setShowDownloadToast(true);
     setTimeout(() => setShowDownloadToast(false), 3000);
   };
@@ -183,7 +180,6 @@ const BookingConfirmation = () => {
     handleDownloadTicket();
   };
 
-  // Generate QR code placeholder (in production, use a QR code library)
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${generateBookingId()}`;
 
   return (

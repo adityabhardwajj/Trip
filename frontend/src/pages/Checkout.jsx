@@ -26,7 +26,6 @@ const Checkout = () => {
   });
   const [loading, setLoading] = useState(false);
   
-  // Razorpay payment link
   const RAZORPAY_PAYMENT_LINK = 'https://razorpay.me/@adityabhardwaj6392';
 
   useEffect(() => {
@@ -46,9 +45,6 @@ const Checkout = () => {
       selectedSeats,
       selectedSeatsFormatted: formatSeatNumbers(selectedSeats)
     });
-
-    // Don't pre-fill - let browser autofill work instead
-    // Keep fields empty for better autofill experience
   }, [isAuthenticated, trip, selectedSeats, navigate, user]);
 
   if (!trip || !selectedSeats) {
@@ -67,12 +63,10 @@ const Checkout = () => {
   const handleCardDetailsChange = (e) => {
     let value = e.target.value;
     
-    // Format card number with spaces
     if (e.target.name === 'cardNumber') {
       value = value.replace(/\s/g, '').replace(/(.{4})/g, '$1 ').trim();
     }
     
-    // Format expiry date as MM/YY
     if (e.target.name === 'expiryDate') {
       value = value.replace(/\D/g, '');
       if (value.length >= 2) {
@@ -89,7 +83,6 @@ const Checkout = () => {
   const handleRazorpayPayment = async (bookingData) => {
     const totalAmount = selectedSeats.length * trip.price;
     
-    // Show confirmation dialog
     const proceed = window.confirm(
       `You will be redirected to Razorpay to complete payment of ₹${totalAmount.toFixed(2)}.\n\nAfter completing the payment, please return to this page to confirm your booking.`
     );
@@ -100,20 +93,17 @@ const Checkout = () => {
 
     setLoading(true);
     
-    // Open Razorpay payment link in a new window
     const paymentWindow = window.open(
       `${RAZORPAY_PAYMENT_LINK}?amount=${totalAmount * 100}&currency=INR&description=Trip Booking: ${trip.source} to ${trip.destination}`,
       '_blank',
       'width=600,height=700'
     );
 
-    // Listen for payment window closure
     const checkPayment = setInterval(() => {
       if (paymentWindow.closed) {
         clearInterval(checkPayment);
         setLoading(false);
         
-        // Ask user to confirm payment completion
         const paymentConfirmed = window.confirm(
           'Have you completed the payment on Razorpay?\n\nClick OK to confirm your booking.'
         );
@@ -126,8 +116,6 @@ const Checkout = () => {
       }
     }, 1000);
 
-    // Alternative: Use Razorpay Checkout if you have API keys
-    // For now, using the payment link approach
     return true;
   };
 
@@ -155,27 +143,23 @@ const Checkout = () => {
   };
 
   const handleBooking = async () => {
-    // Validate user information
     if (!userInfo.fullName || !userInfo.email || !userInfo.phoneNumber) {
       toast.error('Please fill in all contact details');
       return;
     }
-
-    // Validate email format
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userInfo.email)) {
       toast.error('Please enter a valid email address');
       return;
     }
-
-    // Validate phone number (basic check)
+    
     if (userInfo.phoneNumber.length < 10) {
       toast.error('Please enter a valid phone number');
       return;
     }
 
     if (paymentMethod === 'card') {
-      // Remove spaces from card number for validation
       const cardNumber = cardDetails.cardNumber.replace(/\s/g, '');
       if (!cardNumber || cardNumber.length < 13 || cardNumber.length > 19) {
         toast.error('Please enter a valid card number');
@@ -194,8 +178,7 @@ const Checkout = () => {
         return;
       }
     }
-
-    // If Razorpay, handle payment first
+    
     if (paymentMethod === 'razorpay') {
       const seatsToSend = selectedSeats.map(s => typeof s === 'string' ? parseInt(s, 10) : s).filter(s => !isNaN(s));
       
@@ -212,7 +195,6 @@ const Checkout = () => {
     try {
       setLoading(true);
       
-      // Ensure seats are numbers, not strings
       const seatsToSend = selectedSeats.map(s => typeof s === 'string' ? parseInt(s, 10) : s).filter(s => !isNaN(s));
       
       console.log('Checkout - Sending booking request with:', {
@@ -238,12 +220,9 @@ const Checkout = () => {
       
       const response = await createBooking(bookingPayload);
 
-      // Check response structure
       if (response && response.data && response.data.success && response.data.data) {
-        // Booking successfully created
         toast.success(response.data.message || 'Booking confirmed! Redirecting...');
         
-        // Small delay for better UX
         setTimeout(() => {
           navigate('/booking-confirmation', {
             state: { 
@@ -255,7 +234,6 @@ const Checkout = () => {
           });
         }, 500);
       } else {
-        // Unexpected response structure - treat as error
         const errorMsg = response?.data?.message || 'Booking failed. Please try again.';
         toast.error(errorMsg);
         console.error('Unexpected booking response:', response);
@@ -263,13 +241,11 @@ const Checkout = () => {
     } catch (error) {
       const errorMessage = getErrorMessage(error);
       
-      // Check if this is a real error (not a false positive)
       const isRealError = error.response && error.response.status >= 400;
       
       if (isRealError) {
         toast.error(errorMessage);
         
-        // If seats are no longer available, redirect back to trip details
         if (errorMessage.includes('already booked') || 
             errorMessage.includes('not available') ||
             errorMessage.includes('Not enough seats')) {
@@ -278,7 +254,6 @@ const Checkout = () => {
           }, 2000);
         }
       } else {
-        // This might be a network error or other issue
         console.error('Booking error:', error);
         toast.error(errorMessage || 'An error occurred. Please try again.');
       }
@@ -298,11 +273,9 @@ const Checkout = () => {
 
   const formatTime = (timeString) => {
     if (!timeString) return '';
-    // If time is already in 12-hour format, return as is
     if (timeString.includes('AM') || timeString.includes('PM')) {
       return timeString;
     }
-    // Convert 24-hour format to 12-hour format
     const [hours, minutes] = timeString.split(':');
     const hour24 = parseInt(hours);
     const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
@@ -316,7 +289,6 @@ const Checkout = () => {
       
       <div className="checkout-content">
         <div className="checkout-left">
-          {/* Your Information Section */}
           <div className="info-card">
             <h3 className="card-title">Your Information</h3>
             <p className="card-subtitle">Please provide your contact details for this booking</p>
@@ -363,7 +335,6 @@ const Checkout = () => {
             </form>
           </div>
 
-          {/* Payment Method Section */}
           <div className="payment-card">
             <h3 className="card-title">Payment Method</h3>
             
@@ -501,12 +472,10 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* Booking Summary */}
         <div className="booking-summary-card">
           <h3 className="card-title">Booking Summary</h3>
           
           <div className="summary-image">
-            {/* Placeholder for route visualization */}
           </div>
           
           <div className="summary-details">

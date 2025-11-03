@@ -35,7 +35,6 @@ const Profile = () => {
   };
 
   const handleSave = async (field) => {
-    // In a real application, you would call an API to update the profile
     toast.info('Profile update functionality coming soon');
     setEditingField(null);
   };
@@ -79,7 +78,6 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <div className="profile-content">
-        {/* Profile Header */}
         <div className="profile-header-section">
           <div className="profile-avatar-container">
             <img 
@@ -101,11 +99,9 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Account Settings */}
         <div className="account-section">
           <h2 className="account-title">Account</h2>
           <div className="account-form">
-            {/* Name Field */}
             <div className="form-field">
               <div className="field-left">
                 <label className="field-label">Name</label>
@@ -136,7 +132,6 @@ const Profile = () => {
               )}
             </div>
 
-            {/* Email Field */}
             <div className="form-field">
               <div className="field-left">
                 <label className="field-label">Email</label>
@@ -168,7 +163,6 @@ const Profile = () => {
               )}
             </div>
 
-            {/* Password Field */}
             <div className="form-field">
               <div className="field-left">
                 <label className="field-label">Password</label>
@@ -182,7 +176,6 @@ const Profile = () => {
               </button>
             </div>
 
-            {/* Phone Number Field */}
             <div className="form-field">
               <div className="field-left">
                 <label className="field-label">Phone number</label>
@@ -190,7 +183,6 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Address Field */}
             <div className="form-field">
               <div className="field-left">
                 <label className="field-label">Address</label>
@@ -221,7 +213,6 @@ const Profile = () => {
               )}
             </div>
 
-            {/* Date of Birth Field */}
             <div className="form-field">
               <div className="field-left">
                 <label className="field-label">Date of birth</label>
@@ -229,7 +220,6 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Account Creation Date Field */}
             {profile.createdAt && (
               <div className="form-field">
                 <div className="field-left">
@@ -239,7 +229,6 @@ const Profile = () => {
               </div>
             )}
 
-            {/* Logout Button */}
             <div className="form-field logout-field">
               <div className="field-left">
                 <label className="field-label">Account Actions</label>

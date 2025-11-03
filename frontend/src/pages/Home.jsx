@@ -59,7 +59,6 @@ const Home = () => {
     });
   };
 
-  // Helper function to get trip image based on route
   const getTripImage = (source, destination) => {
     const route = `${source}-${destination}`.toLowerCase();
     const images = {
@@ -72,7 +71,6 @@ const Home = () => {
     return images[route] || images['default'];
   };
 
-  // Helper function to calculate duration (simple estimate based on distance)
   const getTripDuration = (source, destination) => {
     const routes = {
       'new york-boston': '4h 30min',
@@ -84,9 +82,7 @@ const Home = () => {
     return routes[route] || '3h 00min';
   };
 
-  // Helper function to get rating and reviews
   const getRating = (trip) => {
-    // This would ideally come from the backend, but for now we'll use sample data
     const ratings = {
       'new york-boston': { rating: 5, reviews: 124 },
       'boston-new york': { rating: 5, reviews: 124 },
@@ -97,7 +93,6 @@ const Home = () => {
     return ratings[route] || { rating: 4.5, reviews: 0 };
   };
 
-  // Helper function to check if trip is popular or has discount
   const getTripLabels = (trip) => {
     const labels = [];
     const route = `${trip.source}-${trip.destination}`.toLowerCase();
@@ -112,7 +107,6 @@ const Home = () => {
     return labels;
   };
 
-  // Helper function to calculate original price if discounted
   const getPricing = (trip) => {
     const labels = getTripLabels(trip);
     const discountLabel = labels.find(l => l.type === 'discount');
@@ -128,7 +122,6 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Hero Section with Search */}
       <div className="hero-section">
         <div className="hero-content">
           <div className="hero-text">
@@ -139,7 +132,6 @@ const Home = () => {
           <div className="search-card">
             <form onSubmit={handleSearch} className="search-form">
               <div className="search-form-content">
-                {/* From Field */}
                 <div className="search-field-wrapper">
                   <label className="field-label">From</label>
                   <div className="input-wrapper">
@@ -159,7 +151,6 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* To Field */}
                 <div className="search-field-wrapper">
                   <label className="field-label">To</label>
                   <div className="input-wrapper">
@@ -179,7 +170,6 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* Date Field */}
                 <div className="search-field-wrapper date-field">
                   <label className="field-label">Date</label>
                   <div className="input-wrapper date-input-wrapper">
@@ -191,7 +181,6 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* Search Button */}
                 <button type="submit" className="search-btn">
                   Search Trips
                 </button>
@@ -201,7 +190,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Trips Section */}
       <div className="trips-section">
         <div className="section-header">
           <h2 className="section-title">Available Trips</h2>
@@ -233,10 +221,8 @@ const Home = () => {
 
               return (
                 <div key={trip._id} className="trip-card">
-                  {/* Trip Image */}
                   <div className="trip-image-container">
                     <img src={tripImage} alt={`${trip.source} to ${trip.destination}`} className="trip-image" />
-                    {/* Labels */}
                     <div className="trip-labels">
                       {labels.map((label, index) => (
                         <span key={index} className={`trip-label ${label.type}`}>
@@ -246,7 +232,6 @@ const Home = () => {
                     </div>
                   </div>
 
-                  {/* Rating */}
                   <div className="trip-rating">
                     <div className="stars">
                       {[1, 2, 3, 4, 5].map((star) => {
@@ -271,12 +256,10 @@ const Home = () => {
                     <span className="reviews-count">({reviews} reviews)</span>
                   </div>
 
-                  {/* Route */}
                   <div className="trip-route">
                     {trip.source} → {trip.destination}
                   </div>
 
-                  {/* Trip Details */}
                   <div className="trip-details">
                     <div className="trip-detail-item">
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -298,7 +281,6 @@ const Home = () => {
                     </div>
                   </div>
 
-                  {/* Price and Book Button */}
                   <div className="trip-footer">
                     <div className="trip-price">
                       <span className="current-price">${currentPrice}</span>
