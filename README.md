@@ -263,7 +263,4 @@ The application is fully responsive and works on:
 - Toast notifications provide user feedback
 - Protected routes ensure proper access control
 
-## License
-
-This project is created for the PSQUARE COMPANY hiring process.
 
