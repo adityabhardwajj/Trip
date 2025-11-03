@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getUserProfile, getErrorMessage } from '../utils/api';
 import { toast } from 'react-toastify';
 import './Profile.css';
 
 const Profile = () => {
-  const { user: authUser } = useAuth();
+  const { user: authUser, logout } = useAuth();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editingField, setEditingField] = useState(null);
@@ -50,6 +52,12 @@ const Profile = () => {
       month: '2-digit',
       day: '2-digit'
     }).replace(/\//g, '-');
+  };
+
+  const handleLogout = () => {
+    logout();
+    toast.success('Logged out successfully');
+    navigate('/');
   };
 
   if (loading) {
@@ -230,6 +238,20 @@ const Profile = () => {
                 </div>
               </div>
             )}
+
+            {/* Logout Button */}
+            <div className="form-field logout-field">
+              <div className="field-left">
+                <label className="field-label">Account Actions</label>
+                <div className="field-value">Sign out of your account</div>
+              </div>
+              <button onClick={handleLogout} className="btn-logout">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 14H3.333C2.979 14 2.639 13.86 2.389 13.61C2.139 13.36 2 13.02 2 12.667V3.333C2 2.979 2.139 2.639 2.389 2.389C2.639 2.139 2.979 2 3.333 2H6M11 11.333L14.333 8M14.333 8L11 4.667M14.333 8H6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>
