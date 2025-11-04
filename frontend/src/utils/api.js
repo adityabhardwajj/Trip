@@ -148,3 +148,5 @@ export const getUserProfile = () => {
   return api.get('/users/profile');
 };
 
+
+export default api ;
