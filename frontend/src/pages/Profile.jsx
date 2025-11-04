@@ -81,7 +81,7 @@ const Profile = () => {
         <div className="profile-header-section">
           <div className="profile-avatar-container">
             <img 
-              src="https://placehold.co/160x160" 
+              src={profile.image ? profile.image : "https://placehold.co/160x160" }
               alt="Profile" 
               className="profile-avatar-img"
             />

@@ -11,7 +11,10 @@ export const getUserProfile = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        createdAt: user.createdAt
+        createdAt: user.createdAt,
+        image:user.image,
+        phone:user.phone,
+        address :user.address
       }
     });
   } catch (error) {

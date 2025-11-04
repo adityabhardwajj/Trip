@@ -59,17 +59,6 @@ const Home = () => {
     });
   };
 
-  const getTripImage = (source, destination) => {
-    const route = `${source}-${destination}`.toLowerCase();
-    const images = {
-      'new york-boston': 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=250&fit=crop',
-      'boston-new york': 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=250&fit=crop',
-      'chicago-los angeles': 'https://images.unsplash.com/photo-1515896656393-4d5152a4cc6f?w=400&h=250&fit=crop',
-      'atlanta-miami': 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=400&h=250&fit=crop',
-      'default': 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=250&fit=crop'
-    };
-    return images[route] || images['default'];
-  };
 
   const getTripDuration = (source, destination) => {
     const routes = {
@@ -212,7 +201,7 @@ const Home = () => {
         ) : (
           <div className="trips-grid">
             {trips.map((trip) => {
-              const tripImage = getTripImage(trip.source, trip.destination);
+              const tripImage = trip.image;
               const duration = getTripDuration(trip.source, trip.destination);
               const { rating, reviews } = getRating(trip);
               const labels = getTripLabels(trip);

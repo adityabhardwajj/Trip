@@ -24,6 +24,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
+  },
+  image:{
+    type:String ,
+    default : 'https://placehold.co/160x160'
+  },
+  phone:{
+    type :String,
+    default :''
+  },
+  address:{
+    type:String ,
+    default:""
   }
 }, {
   timestamps: true
