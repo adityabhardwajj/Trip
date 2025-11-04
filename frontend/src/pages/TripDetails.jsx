@@ -117,7 +117,7 @@ const TripDetails = () => {
       <div className="trip-info-card">
         <img 
           className="trip-hero-image" 
-          src="https://placehold.co/1072x508" 
+          src={trip.image ?trip.image :  "https://placehold.co/1072x508" }
           alt={`${trip.source} to ${trip.destination}`}
         />
         
