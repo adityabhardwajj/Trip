@@ -15,19 +15,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/trips', (req, res, next) => {
-  res.removeHeader('ETag');
-  res.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
-  res.set('Pragma', 'no-cache');
-  res.set('Expires', '0');
-  next();
+
+
+app.get('/', (req, res) => {
+  res.send("Welcome to aditya travels !!");
 });
 
 app.use('/api/auth', authRoutes);
 app.use('/api/trips', tripRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/users', userRoutes);
-
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -51,5 +48,5 @@ mongoose.connect(MONGODB_URI)
     console.error('MongoDB connection error:', error);
     process.exit(1);
   });
-  
+
 

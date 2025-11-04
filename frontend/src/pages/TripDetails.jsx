@@ -22,6 +22,7 @@ const TripDetails = () => {
     try {
       setLoading(true);
       const response = await getTrip(id);
+      console.log({response})
       setTrip(response.data.data);
     } catch (error) {
       toast.error(getErrorMessage(error));
