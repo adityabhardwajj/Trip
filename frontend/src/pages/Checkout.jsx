@@ -121,24 +121,39 @@ const Checkout = () => {
 
   const handlePaymentSuccess = async (bookingData) => {
     try {
+      setLoading(true);
       const response = await createBooking(bookingData);
       
       if (response && response.data && response.data.success && response.data.data) {
+        const bookingData = response.data.data;
+        // Store booking ID in localStorage as backup
+        if (bookingData._id) {
+          localStorage.setItem('lastBookingId', bookingData._id);
+        }
+        
         toast.success('Payment successful! Booking confirmed.');
         
         setTimeout(() => {
           navigate('/booking-confirmation', {
             state: { 
-              booking: response.data.data,
+              booking: bookingData,
               trip,
               selectedSeats,
               userInfo
-            }
+            },
+            replace: true
           });
         }, 500);
+      } else {
+        toast.error('Booking confirmation failed. Please contact support.');
+        console.error('Unexpected booking response:', response);
       }
     } catch (error) {
-      toast.error('Booking confirmation failed. Please contact support.');
+      const errorMessage = getErrorMessage(error);
+      toast.error(errorMessage || 'Booking confirmation failed. Please contact support.');
+      console.error('Booking error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -221,16 +236,23 @@ const Checkout = () => {
       const response = await createBooking(bookingPayload);
 
       if (response && response.data && response.data.success && response.data.data) {
+        const bookingData = response.data.data;
+        // Store booking ID in localStorage as backup
+        if (bookingData._id) {
+          localStorage.setItem('lastBookingId', bookingData._id);
+        }
+        
         toast.success(response.data.message || 'Booking confirmed! Redirecting...');
         
         setTimeout(() => {
           navigate('/booking-confirmation', {
             state: { 
-              booking: response.data.data,
+              booking: bookingData,
               trip,
               selectedSeats,
               userInfo
-            }
+            },
+            replace: true
           });
         }, 500);
       } else {
@@ -396,6 +418,22 @@ const Checkout = () => {
                 </div>
                 <span>Razorpay (UPI, Cards, Wallets)</span>
               </label>
+              
+              <label className={`payment-option ${paymentMethod === 'cash' ? 'selected' : ''}`}>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cash"
+                  checked={paymentMethod === 'cash'}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                <div className="payment-option-icon">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 0L9.5 5.5H14L10 9L11.5 14.5L8 11L4.5 14.5L6 9L2 5.5H6.5L8 0Z" fill={paymentMethod === 'cash' ? '#16A34A' : '#9CA3AF'}/>
+                  </svg>
+                </div>
+                <span>Cash on Board</span>
+              </label>
             </div>
 
             {paymentMethod === 'razorpay' && (
@@ -403,6 +441,15 @@ const Checkout = () => {
                 <div className="info-box">
                   <p>You will be redirected to Razorpay secure payment gateway to complete your payment.</p>
                   <p className="info-note">Razorpay supports UPI, Credit/Debit Cards, Net Banking, and Wallets.</p>
+                </div>
+              </div>
+            )}
+
+            {paymentMethod === 'cash' && (
+              <div className="razorpay-info">
+                <div className="info-box">
+                  <p>You can pay in cash when you board the bus. Your booking will be confirmed immediately.</p>
+                  <p className="info-note">Please have the exact amount ready: ${totalAmount.toFixed(2)}</p>
                 </div>
               </div>
             )}

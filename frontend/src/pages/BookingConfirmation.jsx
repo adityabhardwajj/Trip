@@ -1,21 +1,78 @@
- import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { formatSeatNumbers } from '../utils/seatFormatter';
+import { getBooking, getTrip } from '../utils/api';
+import { toast } from 'react-toastify';
 import './BookingConfirmation.css';
-import { toast } from 'react-toastify'; 
 
 const BookingConfirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { booking, trip, selectedSeats, userInfo } = location.state || {};
+  const { booking: stateBooking, trip: stateTrip, selectedSeats: stateSeats, userInfo } = location.state || {};
   const [showDownloadToast, setShowDownloadToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [booking, setBooking] = useState(stateBooking);
+  const [trip, setTrip] = useState(stateTrip);
+  const [selectedSeats, setSelectedSeats] = useState(stateSeats);
+  const [loading, setLoading] = useState(!stateBooking || !stateTrip);
 
   useEffect(() => {
-    if (!booking || !trip) {
-      navigate('/');
-    }
-  }, [booking, trip, navigate]);
+    const fetchBookingData = async () => {
+      if (stateBooking && stateTrip) {
+        setBooking(stateBooking);
+        setTrip(stateTrip);
+        setSelectedSeats(stateSeats || stateBooking.seats || []);
+        setLoading(false);
+        return;
+      }
+
+      // Try to fetch booking from URL params or localStorage
+      const bookingId = new URLSearchParams(location.search).get('bookingId') || 
+                       localStorage.getItem('lastBookingId');
+      
+      if (bookingId) {
+        try {
+          setLoading(true);
+          const bookingResponse = await getBooking(bookingId);
+          if (bookingResponse?.data?.success && bookingResponse.data.data) {
+            const fetchedBooking = bookingResponse.data.data;
+            setBooking(fetchedBooking);
+            
+            // Fetch trip details
+            if (fetchedBooking.trip) {
+              const tripResponse = await getTrip(fetchedBooking.trip);
+              if (tripResponse?.data?.success && tripResponse.data.data) {
+                setTrip(tripResponse.data.data);
+                setSelectedSeats(fetchedBooking.seats || []);
+                setLoading(false);
+                return;
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching booking:', error);
+          toast.error('Failed to load booking details');
+        }
+      }
+      
+      if (!stateBooking && !stateTrip && !bookingId) {
+        toast.error('Booking information not found. Redirecting to home...');
+        setTimeout(() => navigate('/'), 2000);
+      }
+      setLoading(false);
+    };
+
+    fetchBookingData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stateBooking, stateTrip, stateSeats, location.search]);
+
+  if (loading) {
+    return (
+      <div className="confirmation-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <div>Loading booking confirmation...</div>
+      </div>
+    );
+  }
 
   if (!booking || !trip) {
     return null;
@@ -49,7 +106,6 @@ const BookingConfirmation = () => {
     const idPart = booking._id ? booking._id.slice(-6).toUpperCase() : 'XXXXXX';
     return `#TXN${idPart}`;
 };
-
 
   const handleDownloadTicket = async () => {
     setIsDownloading(true);
@@ -150,7 +206,7 @@ const BookingConfirmation = () => {
             </div>
             <div className="info-box">
               <div className="info-label">Seats</div>
-              <div className="info-value">{formatSeatNumbers(selectedSeats)}</div>
+              <div className="info-value">{formatSeatNumbers(selectedSeats || booking.seats || [])}</div>
             </div>
           </div>
 
