@@ -10,7 +10,7 @@
     "react-toastify": "^9.1.3"
   },
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },

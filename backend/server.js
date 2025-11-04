@@ -28,9 +28,6 @@ app.use('/api/trips', tripRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/users', userRoutes);
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
-});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -54,4 +51,5 @@ mongoose.connect(MONGODB_URI)
     console.error('MongoDB connection error:', error);
     process.exit(1);
   });
+  
 
