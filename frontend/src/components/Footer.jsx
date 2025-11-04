@@ -100,12 +100,6 @@ const Footer = () => {
             </a>
           </div>
         </div>
-
-        <div className="footer-bottom">
-          <div className="footer-copyright">
-            © 2024 TravelPro. All rights reserved.
-          </div>
-        </div>
       </div>
     </footer>
   );
