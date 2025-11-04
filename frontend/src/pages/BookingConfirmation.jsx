@@ -2,12 +2,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { formatSeatNumbers } from '../utils/seatFormatter';
 import './BookingConfirmation.css';
+import { toast } from 'react-toastify'; 
 
 const BookingConfirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { booking, trip, selectedSeats, userInfo } = location.state || {};
   const [showDownloadToast, setShowDownloadToast] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     if (!booking || !trip) {
@@ -28,159 +30,76 @@ const BookingConfirmation = () => {
     });
   };
 
+  const loadScript = (url) => {
+    return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${url}"]`)) {
+            resolve(true);
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = () => resolve(true);
+        script.onerror = (e) => reject(e);
+        document.body.appendChild(script);
+    });
+};
+
+
   const generateBookingId = () => {
-    return `#TXN${booking._id.slice(-6).toUpperCase()}`;
-  };
+    const idPart = booking._id ? booking._id.slice(-6).toUpperCase() : 'XXXXXX';
+    return `#TXN${idPart}`;
+};
 
-  const handleDownloadTicket = () => {
-    const ticketContent = `
-      <html>
-        <head>
-          <title>Flight Ticket</title>
-          <style>
-            body {
-              font-family: 'Montserrat', Arial, sans-serif;
-              padding: 40px;
-              max-width: 600px;
-              margin: 0 auto;
-              background: #f9fafb;
-            }
-            .ticket {
-              background: white;
-              border-radius: 16px;
-              overflow: hidden;
-              box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            }
-            .ticket-header {
-              background: linear-gradient(90deg, #2563EB 0%, #1D4ED8 100%);
-              color: white;
-              padding: 24px;
-            }
-            .ticket-body {
-              padding: 32px;
-            }
-            .route-section {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin: 24px 0;
-            }
-            .route-code {
-              font-size: 24px;
-              font-weight: 600;
-            }
-            .route-name {
-              color: #6B7280;
-              font-size: 14px;
-            }
-            .route-time {
-              color: #111827;
-              font-size: 14px;
-              font-weight: 500;
-            }
-            .info-grid {
-              display: grid;
-              grid-template-columns: 1fr 1fr;
-              gap: 16px;
-              margin: 24px 0;
-            }
-            .info-box {
-              background: #F9FAFB;
-              padding: 16px;
-              border-radius: 8px;
-            }
-            .info-label {
-              color: #6B7280;
-              font-size: 14px;
-            }
-            .info-value {
-              color: #111827;
-              font-size: 16px;
-              font-weight: 600;
-              margin-top: 4px;
-            }
-            .total-section {
-              border-top: 1px solid #E5E7EB;
-              padding-top: 16px;
-              margin-top: 24px;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .total-label {
-              font-size: 18px;
-              font-weight: 600;
-            }
-            .total-value {
-              font-size: 24px;
-              font-weight: 700;
-              color: #16A34A;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="ticket">
-            <div class="ticket-header">
-              <h2>Flight Ticket</h2>
-              <p>Booking ID: ${generateBookingId()}</p>
-            </div>
-            <div class="ticket-body">
-              <div class="route-section">
-                <div>
-                  <div class="route-code">${trip.source.substring(0, 3).toUpperCase()}</div>
-                  <div class="route-name">${trip.source}</div>
-                  <div class="route-time">${trip.time}</div>
-                </div>
-                <div style="text-align: center; flex: 1;">
-                  <div style="border-top: 2px solid #D1D5DB; margin: 12px 20px; position: relative;">
-                    <div style="position: absolute; left: 50%; top: -8px; transform: translateX(-50%); background: white; padding: 0 8px;">
-                      ✈️
-                    </div>
-                  </div>
-                  <div style="color: #6B7280; font-size: 12px;">2h 30min</div>
-                </div>
-                <div style="text-align: right;">
-                  <div class="route-code">${trip.destination.substring(0, 3).toUpperCase()}</div>
-                  <div class="route-name">${trip.destination}</div>
-                  <div class="route-time">${trip.time}</div>
-                </div>
-              </div>
-              
-              <div class="info-grid">
-                <div class="info-box">
-                  <div class="info-label">Date</div>
-                  <div class="info-value">${formatDate(trip.date)}</div>
-                </div>
-                <div class="info-box">
-                  <div class="info-label">Seats</div>
-                  <div class="info-value">${formatSeatNumbers(selectedSeats)}</div>
-                </div>
-              </div>
-              
-              <div class="total-section">
-                <div class="total-label">Total Fare Paid</div>
-                <div class="total-value">$${booking.totalAmount.toFixed(2)}</div>
-              </div>
-            </div>
-          </div>
-        </body>
-      </html>
-    `;
 
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(ticketContent);
-    printWindow.document.close();
-    printWindow.focus();
+  const handleDownloadTicket = async () => {
+    setIsDownloading(true);
     
-    setShowDownloadToast(true);
-    setTimeout(() => setShowDownloadToast(false), 3000);
-  };
+    try {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+
+        const input = document.querySelector('.ticket-card');
+
+        if (!input) {
+            toast.error('Ticket content not found for PDF generation.');
+            setIsDownloading(false);
+            return;
+        }
+
+        const canvas = await window.html2canvas(input, {
+            scale: 3, 
+            useCORS: true,
+            allowTaint: true
+        });
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4'); 
+        
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+
+        const fileName = `Ticket_${generateBookingId()}.pdf`;
+        pdf.save(fileName);
+
+        toast.success('Ticket downloaded successfully as PDF!');
+
+    } catch (error) {
+        console.error('PDF Generation Error:', error);
+        toast.error('Failed to generate ticket PDF. Try "View Ticket" and print manually.'); 
+    } finally {
+        setIsDownloading(false);
+    }
+};
 
   const handleViewTicket = () => {
     handleDownloadTicket();
   };
 
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${generateBookingId()}`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${encodeURIComponent(generateBookingId())}`;
 
   return (
     <div className="confirmation-container">
@@ -250,9 +169,14 @@ const BookingConfirmation = () => {
           </div>
 
           <div className="ticket-actions">
-            <button onClick={handleDownloadTicket} className="btn-download">
-              <span>📥</span> Download Ticket
-            </button>
+          <button 
+                                onClick={handleDownloadTicket} 
+                                className="btn-download"
+                                disabled={isDownloading}
+                            >
+                                <span>📥</span> {isDownloading ? 'Generating PDF...' : 'Download Ticket'}
+                            </button>
+
             <button onClick={handleViewTicket} className="btn-view">
               <span>👁️</span> View Ticket
             </button>
