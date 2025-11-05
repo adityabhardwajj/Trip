@@ -55,3 +55,9 @@ npm run dev
 The frontend will run on `http://localhost:3000`
 
 
+.env MONGODB_URI=mongodb+srv://iiaadb:Aditya%4000@cluster0.tl5uyrn.mongodb.net/?appName=Cluster0
+JWT_SECRET=your-secret-key-change-this-in-production
+JWT_EXPIRE=7d
+PORT=5000
+
+
